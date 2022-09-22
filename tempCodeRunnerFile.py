@@ -1,1 +1,0 @@
-window.resizable(False, False)
