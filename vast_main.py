@@ -102,5 +102,5 @@ signin_btn = tk.Button(
 )
 signin_btn.place(x=570, y=300)
 
-# window.resizable(False, False)
+window.resizable(False, False)
 window.mainloop()

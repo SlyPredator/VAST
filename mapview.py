@@ -60,7 +60,7 @@ class App(customtkinter.CTk):
         self.map_label.grid(row=3, column=0, padx=(20, 20), pady=(20, 0))
         self.map_option_menu = customtkinter.CTkOptionMenu(
             self.frame_left,
-            values=["OpenStreetMap", "Google normal", "Google satellite"],
+            values=["OpenStreetMap", "Google Normal", "Google Satellite"],
             command=self.change_map,
         )
         self.map_option_menu.grid(row=4, column=0, padx=(20, 20), pady=(10, 0))
@@ -98,7 +98,7 @@ class App(customtkinter.CTk):
         )
 
         self.entry = customtkinter.CTkEntry(
-            master=self.frame_right, placeholder_text="type address"
+            master=self.frame_right, placeholder_text="Type Address"
         )
         self.entry.grid(row=0, column=0, sticky="we", padx=(12, 0), pady=12)
         self.entry.entry.bind("<Return>", self.search_event)
@@ -109,8 +109,8 @@ class App(customtkinter.CTk):
         self.button_5.grid(row=0, column=1, sticky="w", padx=(12, 0), pady=12)
 
         # Set default values
-        self.map_widget.set_address("Berlin")
-        self.map_option_menu.set("OpenStreetMap")
+        self.map_widget.set_address("Bangalore")
+        self.map_option_menu.set("Google Normal")
         self.appearance_mode_optionemenu.set("Dark")
 
     def search_event(self, event=None):
@@ -151,6 +151,3 @@ class App(customtkinter.CTk):
 
     def start(self):
         self.mainloop()
-
-
-
