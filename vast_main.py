@@ -92,15 +92,15 @@ perferendis asperiores.""",
 )
 info_text.place(x=27.0, y=200.0)
 
-generate_btn_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\login.png")
-generate_btn = tk.Button(
-    image=generate_btn_img,
+signin_btn_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\signin.png")
+signin_btn = tk.Button(
+    image=signin_btn_img,
     command=uwu,
     borderwidth=0,
     highlightthickness=0,
     relief="flat",
 )
-generate_btn.place(x=557, y=401)
+signin_btn.place(x=570, y=300)
 
 # window.resizable(False, False)
 window.mainloop()
