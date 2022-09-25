@@ -1,10 +1,15 @@
 import tkinter as tk
 import tkinter.messagebox
 from PIL import ImageTk as itk
+from PIL import Image
+import vast_main
 
-def admin_page(event):
+window = vast_main.window
+
+
+def admin_page():
     global admin_window
-    admin_window = tk.Tk()
+    admin_window = tk.Toplevel(window)
     admin_window.title("VAST - Login/Register - Admins")
     admin_window.geometry("862x519")
     canvas = tk.Canvas(
@@ -21,10 +26,10 @@ def admin_page(event):
         431, 0, 431 + 431, 0 + 519, fill="#eeeeee", outline=""
     )  # right rectangle
     canvas.create_rectangle(40, 160, 40 + 60, 160 + 5, fill="#FCFCFC", outline="")
-    tb_img1 = r"D:\Navneeth\VAST\assets\TextBox_Bg.png"
-    text_box_bg1 = itk.PhotoImage(file=tb_img1)
-    username_img = canvas.create_image(650.5, 167.5, image=text_box_bg1)
-    password_img = canvas.create_image(650.5, 248.5, image=text_box_bg1)
+    # tb_img = r"D:\Navneeth\VAST\assets\TextBox_Bg.png"
+    text_box_bg = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\TextBox_Bg.png"))
+    username_img = canvas.create_image(650.5, 167.5, image=text_box_bg)
+    password_img = canvas.create_image(650.5, 248.5, image=text_box_bg)
 
     username = tk.Entry(background="#F6F7F9", bd=0, highlightthickness=0)
     username.place(x=490.0, y=139 + 25, width=321.0, height=35)
@@ -59,8 +64,8 @@ def admin_page(event):
         font=("Arial-BoldMT", int(13.0)),
         anchor="w",
     )
-    car_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\car_img2.gif")
-    canvas.create_image(40, 350, anchor="nw", image=car_img)
+    # car_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\car_img2.gif")
+    # canvas.create_image(40, 350, anchor="nw", image=car_img)
 
     title = tk.Label(
         text="VAST",
@@ -87,7 +92,7 @@ def admin_page(event):
     admin_label.place(x=588, y=400)
     admin_label.bind("<Button-1>")
 
-    signin_btn_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\signin.png")
+    signin_btn_img = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\signin.png"))
     signin_btn = tk.Button(
         image=signin_btn_img,
         borderwidth=0,
