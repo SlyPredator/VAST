@@ -2,6 +2,7 @@ import tkinter
 import tkinter.messagebox
 import customtkinter
 from pathlib import Path
+from PIL import ImageTk as itk, Image
 
 ASSETS_PATH = Path(__file__).resolve().parent / "assets"
 
@@ -22,12 +23,13 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("VAST - Car Rentals")
+        self.title("VAST - Login")
         self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
-
+        logo = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
+        self.call("wm", "iconphoto", self._w, logo)
         # ============ create two frames ============
 
         # configure grid layout (2x1)
@@ -35,7 +37,7 @@ class App(customtkinter.CTk):
         self.grid_rowconfigure(0, weight=1)
 
         self.frame_left = customtkinter.CTkFrame(
-            master=self, width=180, corner_radius=0
+            master=self, width=300, corner_radius=0
         )
         self.frame_left.grid(row=0, column=0, sticky="nswe")
 
@@ -52,6 +54,59 @@ class App(customtkinter.CTk):
         self.frame_left.grid_rowconfigure(
             11, minsize=10
         )  # empty row with minsize as spacing
+        self.label_1 = customtkinter.CTkLabel(
+            master=self.frame_left,
+            text="VAST - Car Rentals",
+            text_font=("Roboto Medium", -16),
+        )  # font name and size in px
+        self.label_1.grid(row=0, column=0, pady=10, padx=10)
+        self.label_info_1 = customtkinter.CTkLabel(
+            master=self.frame_left,
+            text="CTkLabel: Lorem ipsum dolor sit,\n"
+            + "amet consetetur sadipscing elitr,\n"
+            + "sed diam nonumy eirmod tempor",
+            height=100,
+            corner_radius=6,  # <- custom corner radius
+            fg_color=("white", "gray38"),  # <- custom tuple-color
+            justify=tkinter.LEFT,
+        )
+        self.label_info_1.grid(column=0, row=4, sticky="nwe", padx=15, pady=15)
+        self.label_text_1 = customtkinter.CTkLabel(
+            master=self.frame_right,
+            text="Enter the details",
+            text_font=("Roboto Medium", -16),
+            anchor=tkinter.CENTER,
+        )
+        self.label_text_1.grid(row=0, column=0, pady=20, padx=230)
+        self.user_entry = customtkinter.CTkEntry(
+            master=self.frame_right, width=120, placeholder_text="Username"
+        )
+        self.user_entry.grid(
+            row=8, column=0, columnspan=1, pady=0, padx=20, sticky="we"
+        )
+        self.pwd_entry = customtkinter.CTkEntry(
+            master=self.frame_right, width=120, placeholder_text="Password"
+        )
+        self.pwd_entry.grid(
+            row=10, column=0, columnspan=1, pady=30, padx=20, sticky="we"
+        )
+        self.check_box_1 = customtkinter.CTkCheckBox(
+            master=self.frame_right, text="CTkCheckBox"
+        )
+        self.check_box_1.grid(row=12, column=0, pady=10, padx=20, sticky="w")
+
+        self.check_box_2 = customtkinter.CTkCheckBox(
+            master=self.frame_right, text="CTkCheckBox"
+        )
+        self.check_box_2.grid(row=12, column=2, pady=10, padx=20, sticky="w")
+        self.button_5 = customtkinter.CTkButton(
+            master=self.frame_right,
+            text="Sign in",
+            border_width=2,  # <- custom border_width
+            fg_color="blue",  # <- no fg_color
+            command=self.button_event,
+        )
+        self.button_5.grid(row=16, column=2, columnspan=1, pady=20, padx=20, sticky="we")
 
     def button_event(self):
         print("Button pressed")
