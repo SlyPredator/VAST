@@ -88,10 +88,6 @@ def admin_page():
     )
     info_text.place(x=27.0, y=200.0)
 
-    admin_label = tk.Label(text="Click here for admins")
-    admin_label.place(x=588, y=400)
-    admin_label.bind("<Button-1>")
-
     signin_btn_img = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\signin.png"))
     signin_btn = tk.Button(
         image=signin_btn_img,

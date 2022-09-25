@@ -2,10 +2,13 @@ import tkinter as tk
 import tkinter.messagebox
 from mapview import *
 from PIL import ImageTk as itk, Image
+from pathlib import Path
 
 # import admin
 
 # adwin = admin.adminpage1()
+
+ASSETS_PATH = Path(__file__).resolve().parent / "assets"
 
 
 def uwu():
@@ -22,7 +25,7 @@ def on_enter():
     tk.messagebox.showinfo(title="User Details", message=userlist)
 
 
-def admin_page():
+def admin_page(event):
     global admin_window
     admin_window = tk.Toplevel(window)
     admin_window.title("VAST - Login/Register - Admins")
@@ -41,8 +44,8 @@ def admin_page():
         431, 0, 431 + 431, 0 + 519, fill="#eeeeee", outline=""
     )  # right rectangle
     canvas.create_rectangle(40, 160, 40 + 60, 160 + 5, fill="#FCFCFC", outline="")
-    # tb_img = r"D:\Navneeth\VAST\assets\TextBox_Bg.png"
-    text_box_bg = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\TextBox_Bg.png"))
+    # tb_img = ASSETS_PATH / "TextBox_Bg.png"
+    text_box_bg = itk.PhotoImage(Image.open(ASSETS_PATH / "TextBox_Bg.png"))
     username_img = canvas.create_image(650.5, 167.5, image=text_box_bg)
     password_img = canvas.create_image(650.5, 248.5, image=text_box_bg)
 
@@ -83,7 +86,7 @@ def admin_page():
         font=("Arial-BoldMT", int(13.0)),
         anchor="w",
     )
-    # car_img = tk.PhotoImage(file=r"D:\Navneeth\VAST\assets\car_img2.gif")
+    # car_img = tk.PhotoImage(file=ASSETS_PATH / "car_img2.gif")
     # canvas.create_image(40, 350, anchor="nw", image=car_img)
 
     title = tk.Label(
@@ -113,7 +116,7 @@ def admin_page():
     admin_label.place(x=588, y=400)
     admin_label.bind("<Button-1>")
 
-    signin_btn_img = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\signin.png"))
+    signin_btn_img = itk.PhotoImage(Image.open(ASSETS_PATH / "signin.png"))
     signin_btn = tk.Button(
         master=admin_window,
         image=signin_btn_img,
@@ -130,7 +133,7 @@ def admin_page():
 global window
 window = tk.Tk()
 window.title("VAST - Login/Register")
-logo = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\bitmap.png"))
+logo = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
 window.call("wm", "iconphoto", window._w, logo)
 window.geometry("862x519")
 canvas = tk.Canvas(
@@ -147,7 +150,7 @@ canvas.create_rectangle(
     431, 0, 431 + 431, 0 + 519, fill="#eeeeee", outline=""
 )  # right rectangle
 canvas.create_rectangle(40, 160, 40 + 60, 160 + 5, fill="#FCFCFC", outline="")
-text_box_bg = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\TextBox_Bg.png"))
+text_box_bg = itk.PhotoImage(Image.open(ASSETS_PATH / "TextBox_Bg.png"))
 username_img = canvas.create_image(650.5, 167.5, image=text_box_bg)
 password_img = canvas.create_image(650.5, 248.5, image=text_box_bg)
 
@@ -178,7 +181,7 @@ canvas.create_text(
     font=("Arial-BoldMT", int(13.0)),
     anchor="w",
 )
-# car_img = tk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\car_img2.gif"))
+# car_img = tk.PhotoImage(Image.open(ASSETS_PATH / "car_img2.gif"))
 # canvas.create_image(40, 350, anchor="nw", image=car_img)
 
 title = tk.Label(
@@ -202,10 +205,14 @@ perferendis asperiores.""",
 )
 info_text.place(x=27.0, y=200.0)
 
-signin_btn_img = itk.PhotoImage(Image.open(r"D:\Navneeth\VAST\assets\signin.png"))
+admin_label = tk.Label(text="Click here for admins")
+admin_label.place(x=588, y=400)
+admin_label.bind("<Button-1>", admin_page)
+
+signin_btn_img = itk.PhotoImage(Image.open(ASSETS_PATH / "signin.png"))
 signin_btn = tk.Button(
     image=signin_btn_img,
-    command=admin_page,
+    command=on_enter,
     borderwidth=0,
     highlightthickness=0,
     relief="flat",
