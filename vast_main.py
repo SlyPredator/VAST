@@ -29,7 +29,7 @@ def admin_page(event):
     global admin_window
     admin_window = tk.Toplevel(window)
     admin_window.title("VAST - Login/Register - Admins")
-    admin_window.geometry("862x519")
+    admin_window.geometry("862x519+290+120")
     canvas = tk.Canvas(
         admin_window,
         bg="#038c9e",
@@ -112,10 +112,6 @@ def admin_page(event):
     )
     info_text.place(x=27.0, y=200.0)
 
-    admin_label = tk.Label(text="Click here for admins")
-    admin_label.place(x=588, y=400)
-    admin_label.bind("<Button-1>")
-
     signin_btn_img = itk.PhotoImage(Image.open(ASSETS_PATH / "signin.png"))
     signin_btn = tk.Button(
         master=admin_window,
@@ -135,7 +131,7 @@ window = tk.Tk()
 window.title("VAST - Login/Register")
 logo = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
 window.call("wm", "iconphoto", window._w, logo)
-window.geometry("862x519")
+window.geometry("862x519+290+120")
 canvas = tk.Canvas(
     window,
     bg="#038c9e",
