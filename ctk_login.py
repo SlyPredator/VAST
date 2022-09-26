@@ -17,7 +17,7 @@ customtkinter.set_default_color_theme(
 
 class Login_App(customtkinter.CTk):
 
-    WIDTH = 862
+    WIDTH = 960
     HEIGHT = 519
 
     def __init__(self):
@@ -44,7 +44,7 @@ class Login_App(customtkinter.CTk):
 
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
-        self.frame_left.configure(fg_color="#B9D0E9")
+        # self.frame_left.configure(fg_color="#B9D0E9")
         self.frame_right.configure(fg_color="#B9D0E9")
         self.cust_check_var = self.admin_check_var = tkinter.IntVar(
             master=self.frame_right
@@ -68,22 +68,37 @@ class Login_App(customtkinter.CTk):
         self.label_1.grid(row=0, column=0, pady=10, padx=10)
         self.label_info_1 = customtkinter.CTkLabel(
             master=self.frame_left,
-            text="CTkLabel: Lorem ipsum dolor sit,\n"
-            + "amet consetetur sadipscing elitr,\n"
-            + "sed diam nonumy eirmod tempor",
+            text="If you love cars, but find it hard to identify \n"
+            + "one which is perfect for you, VAST serves as an \n"
+            +"interesting option. We make it possible for you to \n"
+            +"pick your car based on your travelling needs.",
             height=100,
             corner_radius=6,  # <- custom corner radius
             fg_color=("white", "gray38"),  # <- custom tuple-color
-            justify=tkinter.LEFT,
+            justify=tkinter.CENTER,
+            text_font=("Roboto Medium", -14.5)
         )
-        self.label_info_1.grid(column=0, row=4, sticky="nwe", padx=15, pady=15)
+        self.label_info_1.grid(column=0, row=1, sticky="nwe", padx=15, pady=15)
+        self.label_info_2 = customtkinter.CTkLabel(
+            master=self.frame_left,
+            text="Easy Steps to Start Driving our Rentals: \n\n"
+            + "SIGN UP - In two minutes and get verified \n"
+            +"CHOOSE - From our lineup and pay on-the-go \n"
+            +"DRIVE - As simple as that. Enjoy driving!",
+            height=130,
+            corner_radius=6,  # <- custom corner radius
+            fg_color=("white", "gray38"),  # <- custom tuple-color
+            justify=tkinter.CENTER,
+            text_font=("Roboto Medium", -14.5)
+        )
+        self.label_info_2.grid(column=0, row=2, sticky="nwe", padx=15, pady=15)
         self.label_text_1 = customtkinter.CTkLabel(
             master=self.frame_right,
             text="Enter the details",
             text_color="#0E2239",
             text_font=("Roboto Medium", -20),
         )
-        self.label_text_1.grid(row=0, column=0, pady=20, padx=230, sticky="we")
+        self.label_text_1.grid(row=0, column=0, pady=20, padx=210, sticky="we")
         self.user_entry = customtkinter.CTkEntry(
             master=self.frame_right,
             width=120,
@@ -125,7 +140,7 @@ class Login_App(customtkinter.CTk):
             text_font=("Roboto Medium", -16),
         )
         # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
-        self.admin_checkbox.place(x=400, y=225)
+        self.admin_checkbox.place(x=370, y=225)
         self.sign_in_btn = customtkinter.CTkButton(
             master=self.frame_right,
             text="Sign in",
