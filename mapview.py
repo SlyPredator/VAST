@@ -4,18 +4,18 @@ from tkintermapview import TkinterMapView
 customtkinter.set_default_color_theme("blue")
 
 
-class App(customtkinter.CTk):
+class Map_App(customtkinter.CTk):
 
-    APP_NAME = "TkinterMapView with CustomTkinter"
+    MapApp_NAME = "TkinterMapView with CustomTkinter"
     WIDTH = 800
     HEIGHT = 500
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.title(App.APP_NAME)
-        self.geometry(str(App.WIDTH) + "x" + str(App.HEIGHT))
-        self.minsize(App.WIDTH, App.HEIGHT)
+        self.title(Map_App.MapApp_NAME)
+        self.geometry(str(Map_App.WIDTH) + "x" + str(Map_App.HEIGHT))
+        self.minsize(Map_App.WIDTH, Map_App.HEIGHT)
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bind("<Command-q>", self.on_closing)
@@ -65,16 +65,16 @@ class App(customtkinter.CTk):
         )
         self.map_option_menu.grid(row=4, column=0, padx=(20, 20), pady=(10, 0))
 
-        self.appearance_mode_label = customtkinter.CTkLabel(
-            self.frame_left, text="Appearance Mode:", anchor="w"
+        self.MapAppearance_mode_label = customtkinter.CTkLabel(
+            self.frame_left, text="MapAppearance Mode:", anchor="w"
         )
-        self.appearance_mode_label.grid(row=5, column=0, padx=(20, 20), pady=(20, 0))
-        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(
+        self.MapAppearance_mode_label.grid(row=5, column=0, padx=(20, 20), pady=(20, 0))
+        self.MapAppearance_mode_optionemenu = customtkinter.CTkOptionMenu(
             self.frame_left,
             values=["Light", "Dark", "System"],
-            command=self.change_appearance_mode,
+            command=self.change_MapAppearance_mode,
         )
-        self.appearance_mode_optionemenu.grid(
+        self.MapAppearance_mode_optionemenu.grid(
             row=6, column=0, padx=(20, 20), pady=(10, 20)
         )
 
@@ -111,7 +111,7 @@ class App(customtkinter.CTk):
         # Set default values
         self.map_widget.set_address("Bangalore")
         self.map_option_menu.set("Google Normal")
-        self.appearance_mode_optionemenu.set("Dark")
+        self.MapAppearance_mode_optionemenu.set("Dark")
 
     def search_event(self, event=None):
         self.map_widget.set_address(self.entry.get())
@@ -119,7 +119,7 @@ class App(customtkinter.CTk):
 
     def set_marker_event(self):
         current_position = self.map_widget.get_position()
-        self.marker_list.append(
+        self.marker_list.MapAppend(
             self.map_widget.set_marker(current_position[0], current_position[1])
         )
 
@@ -127,8 +127,8 @@ class App(customtkinter.CTk):
         for marker in self.marker_list:
             marker.delete()
 
-    def change_appearance_mode(self, new_appearance_mode: str):
-        customtkinter.set_appearance_mode(new_appearance_mode)
+    def change_MapAppearance_mode(self, new_MapAppearance_mode: str):
+        customtkinter.set_MapAppearance_mode(new_MapAppearance_mode)
 
     def change_map(self, new_map: str):
         if new_map == "OpenStreetMap":

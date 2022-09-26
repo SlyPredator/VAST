@@ -15,7 +15,7 @@ customtkinter.set_default_color_theme(
 )  # Themes: "blue" (standard), "green", "dark-blue"
 
 
-class App(customtkinter.CTk):
+class Login_App(customtkinter.CTk):
 
     WIDTH = 862
     HEIGHT = 519
@@ -24,7 +24,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         self.title("VAST - Login")
-        self.geometry(f"{App.WIDTH}x{App.HEIGHT}+290+120")
+        self.geometry(f"{Login_App.WIDTH}x{Login_App.HEIGHT}+290+120")
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
@@ -44,7 +44,8 @@ class App(customtkinter.CTk):
 
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
-        self.frame_right.configure(fg_color="#D2FBD0")
+        self.frame_left.configure(fg_color="#B9D0E9")
+        self.frame_right.configure(fg_color="#B9D0E9")
         self.cust_check_var = self.admin_check_var = tkinter.IntVar(
             master=self.frame_right
         )
@@ -79,8 +80,8 @@ class App(customtkinter.CTk):
         self.label_text_1 = customtkinter.CTkLabel(
             master=self.frame_right,
             text="Enter the details",
-            text_color="#1B4643",
-            text_font=("Roboto Medium", -16),
+            text_color="#0E2239",
+            text_font=("Roboto Medium", -20),
         )
         self.label_text_1.grid(row=0, column=0, pady=20, padx=230, sticky="we")
         self.user_entry = customtkinter.CTkEntry(
@@ -90,7 +91,7 @@ class App(customtkinter.CTk):
             text_font=("Roboto Medium", -16),
         )
         self.user_entry.grid(
-            row=1, column=0, columnspan=1, pady=0, padx=20, sticky="we"
+            row=1, column=0, columnspan=1, pady=0, padx=40, sticky="we"
         )
         self.pwd_entry = customtkinter.CTkEntry(
             master=self.frame_right,
@@ -99,7 +100,7 @@ class App(customtkinter.CTk):
             text_font=("Roboto Medium", -16),
         )
         self.pwd_entry.grid(
-            row=2, column=0, columnspan=1, pady=20, padx=20, sticky="we"
+            row=2, column=0, columnspan=1, pady=20, padx=40, sticky="we"
         )
         self.cust_checkbox = customtkinter.CTkCheckBox(
             master=self.frame_right,
@@ -108,7 +109,7 @@ class App(customtkinter.CTk):
             offvalue="0",
             command=self.cust_check_event,
             variable=self.cust_check_var,
-            text_color="#0D5F07",
+            text_color="#0E2239",
             text_font=("Roboto Medium", -16),
         )
         self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
@@ -120,7 +121,7 @@ class App(customtkinter.CTk):
             offvalue="0",
             command=self.admin_check_event,
             variable=self.admin_check_var,
-            text_color="#0D5F07",
+            text_color="#0E2239",
             text_font=("Roboto Medium", -16),
         )
         # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
@@ -129,23 +130,24 @@ class App(customtkinter.CTk):
             master=self.frame_right,
             text="Sign in",
             border_width=2,  # <- custom border_width
-            border_color="#1B4643",
-            fg_color="#1B4643",  # <- no fg_color
+            border_color="#0E2239",
+            fg_color="#0E2239",  # <- no fg_color
             command=self.button_event,
             text_font=("Roboto Medium", -16),
         )
-        self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
+        self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
         self.register_label = tkinter.Label(
             master=self.frame_right,
             text="New here? Register by clicking here!",
-            bg="#D2FBD0",  # 0D5F07
-            fg="#0D5F07",
+            bg="#B9D0E9",  # 0D5F07
+            fg="#0E2239",
             font=("Roboto Medium", int(12), "underline"),
             # text_font=("Roboto Medium", -16),
             # text_color="#0D5F07",
         )
         self.register_label.grid(row=5, column=0, pady=20, padx=20, sticky="nsew")
         self.register_label.bind("<Button-1>", self.register)
+        self.resizable(False, False)
 
     def button_event(self):
         print("Button pressed")
@@ -165,11 +167,11 @@ class App(customtkinter.CTk):
             self.cust_checkbox.deselect()
 
     def register(self, event=0):
-        app2 = App2()
+        app2 = Register_App()
         app2.mainloop()
 
 
-class App2(customtkinter.CTk):
+class Register_App(customtkinter.CTk):
 
     WIDTH = 862
     HEIGHT = 519
@@ -178,7 +180,7 @@ class App2(customtkinter.CTk):
         super().__init__()
 
         self.title("VAST - Login")
-        self.geometry(f"{App.WIDTH}x{App.HEIGHT}+290+120")
+        self.geometry(f"{Register_App.WIDTH}x{Register_App.HEIGHT}+290+120")
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
@@ -296,5 +298,5 @@ class App2(customtkinter.CTk):
 
 
 if __name__ == "__main__":
-    app = App()
+    app = Login_App()
     app.mainloop()
