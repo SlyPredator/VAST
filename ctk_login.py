@@ -30,6 +30,7 @@ class App(customtkinter.CTk):
         )  # call .on_closing() when app gets closed
         logo = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
         self.call("wm", "iconphoto", self._w, logo)
+        self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
         # ============ create two frames ============
 
         # configure grid layout (2x1)
@@ -43,6 +44,8 @@ class App(customtkinter.CTk):
 
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
+        self.frame_right.configure(fg_color="#2A6E6A")
+        self.check_var1 = self.check_var2 = tkinter.IntVar(master=self.frame_right)
 
         self.frame_left.grid_rowconfigure(
             0, minsize=10
@@ -75,38 +78,48 @@ class App(customtkinter.CTk):
             master=self.frame_right,
             text="Enter the details",
             text_font=("Roboto Medium", -16),
-            anchor=tkinter.CENTER,
         )
-        self.label_text_1.grid(row=0, column=0, pady=20, padx=230)
+        self.label_text_1.grid(row=0, column=0, pady=20, padx=230, sticky="we")
         self.user_entry = customtkinter.CTkEntry(
             master=self.frame_right, width=120, placeholder_text="Username"
         )
         self.user_entry.grid(
-            row=8, column=0, columnspan=1, pady=0, padx=20, sticky="we"
+            row=1, column=0, columnspan=1, pady=0, padx=20, sticky="we"
         )
         self.pwd_entry = customtkinter.CTkEntry(
             master=self.frame_right, width=120, placeholder_text="Password"
         )
         self.pwd_entry.grid(
-            row=10, column=0, columnspan=1, pady=30, padx=20, sticky="we"
+            row=2, column=0, columnspan=1, pady=20, padx=20, sticky="we"
         )
         self.check_box_1 = customtkinter.CTkCheckBox(
-            master=self.frame_right, text="CTkCheckBox"
+            master=self.frame_right,
+            text="Customer",
+            onvalue="1",
+            offvalue="0",
+            command=self.checkbox_event1,
+            variable=self.check_var1,
         )
-        self.check_box_1.grid(row=12, column=0, pady=10, padx=20, sticky="w")
+        self.check_box_1.grid(row=4, column=0, pady=10, padx=100, sticky="we")
 
         self.check_box_2 = customtkinter.CTkCheckBox(
-            master=self.frame_right, text="CTkCheckBox"
+            master=self.frame_right,
+            text="Admin",
+            onvalue="1",
+            offvalue="0",
+            command=self.checkbox_event2,
+            variable=self.check_var2,
         )
-        self.check_box_2.grid(row=12, column=2, pady=10, padx=20, sticky="w")
-        self.button_5 = customtkinter.CTkButton(
+        # self.check_box_2.grid(row=4, column=1, pady=10, padx=20, sticky="s")
+        self.check_box_2.place(x=400, y=225)
+        self.sign_in_btn = customtkinter.CTkButton(
             master=self.frame_right,
             text="Sign in",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
             command=self.button_event,
         )
-        self.button_5.grid(row=16, column=2, columnspan=1, pady=20, padx=20, sticky="we")
+        self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
 
     def button_event(self):
         print("Button pressed")
@@ -116,6 +129,13 @@ class App(customtkinter.CTk):
 
     def on_closing(self, event=0):
         self.destroy()
+
+    def checkbox_event1(self):
+        if self.check_var1.get() == 1:
+            self.check_box_2.deselect()
+    def checkbox_event2(self):
+        if self.check_var2.get() == 1:
+            self.check_box_1.deselect()    
 
 
 if __name__ == "__main__":
