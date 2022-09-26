@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 tempCodeRunnerFile.py
+vast_main.py

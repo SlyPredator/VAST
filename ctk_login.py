@@ -1,11 +1,12 @@
 import tkinter
 import tkinter.messagebox
-import customtkinter
 from pathlib import Path
-from PIL import ImageTk as itk, Image
+
+import customtkinter
+from PIL import Image
+from PIL import ImageTk as itk
 
 ASSETS_PATH = Path(__file__).resolve().parent / "assets"
-
 
 customtkinter.set_appearance_mode(
     "System"
@@ -70,26 +71,26 @@ class Login_App(customtkinter.CTk):
             master=self.frame_left,
             text="If you love cars, but find it hard to identify \n"
             + "one which is perfect for you, VAST serves as an \n"
-            +"interesting option. We make it possible for you to \n"
-            +"pick your car based on your travelling needs.",
+            + "interesting option. We make it possible for you to \n"
+            + "pick your car based on your travelling needs.",
             height=100,
             corner_radius=6,  # <- custom corner radius
             fg_color=("white", "gray38"),  # <- custom tuple-color
             justify=tkinter.CENTER,
-            text_font=("Roboto Medium", -14.5)
+            text_font=("Roboto Medium", -14.5),
         )
         self.label_info_1.grid(column=0, row=1, sticky="nwe", padx=15, pady=15)
         self.label_info_2 = customtkinter.CTkLabel(
             master=self.frame_left,
             text="Easy Steps to Start Driving our Rentals: \n\n"
             + "SIGN UP - In two minutes and get verified \n"
-            +"CHOOSE - From our lineup and pay on-the-go \n"
-            +"DRIVE - As simple as that. Enjoy driving!",
+            + "CHOOSE - From our lineup and pay on-the-go \n"
+            + "DRIVE - As simple as that. Enjoy driving!",
             height=130,
             corner_radius=6,  # <- custom corner radius
             fg_color=("white", "gray38"),  # <- custom tuple-color
             justify=tkinter.CENTER,
-            text_font=("Roboto Medium", -14.5)
+            text_font=("Roboto Medium", -14.5),
         )
         self.label_info_2.grid(column=0, row=2, sticky="nwe", padx=15, pady=15)
         self.label_text_1 = customtkinter.CTkLabel(
