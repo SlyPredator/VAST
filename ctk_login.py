@@ -45,7 +45,9 @@ class App(customtkinter.CTk):
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
         self.frame_right.configure(fg_color="#2A6E6A")
-        self.check_var1 = self.check_var2 = tkinter.IntVar(master=self.frame_right)
+        self.cust_check_var = self.admin_check_var = tkinter.IntVar(
+            master=self.frame_right
+        )
 
         self.frame_left.grid_rowconfigure(
             0, minsize=10
@@ -92,26 +94,26 @@ class App(customtkinter.CTk):
         self.pwd_entry.grid(
             row=2, column=0, columnspan=1, pady=20, padx=20, sticky="we"
         )
-        self.check_box_1 = customtkinter.CTkCheckBox(
+        self.cust_checkbox = customtkinter.CTkCheckBox(
             master=self.frame_right,
             text="Customer",
             onvalue="1",
             offvalue="0",
-            command=self.checkbox_event1,
-            variable=self.check_var1,
+            command=self.cust_check_event,
+            variable=self.cust_check_var,
         )
-        self.check_box_1.grid(row=4, column=0, pady=10, padx=100, sticky="we")
+        self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
 
-        self.check_box_2 = customtkinter.CTkCheckBox(
+        self.admin_checkbox = customtkinter.CTkCheckBox(
             master=self.frame_right,
             text="Admin",
             onvalue="1",
             offvalue="0",
-            command=self.checkbox_event2,
-            variable=self.check_var2,
+            command=self.admin_check_event,
+            variable=self.admin_check_var,
         )
-        # self.check_box_2.grid(row=4, column=1, pady=10, padx=20, sticky="s")
-        self.check_box_2.place(x=400, y=225)
+        # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
+        self.admin_checkbox.place(x=400, y=225)
         self.sign_in_btn = customtkinter.CTkButton(
             master=self.frame_right,
             text="Sign in",
@@ -130,12 +132,13 @@ class App(customtkinter.CTk):
     def on_closing(self, event=0):
         self.destroy()
 
-    def checkbox_event1(self):
-        if self.check_var1.get() == 1:
-            self.check_box_2.deselect()
-    def checkbox_event2(self):
-        if self.check_var2.get() == 1:
-            self.check_box_1.deselect()    
+    def cust_check_event(self):
+        if self.cust_check_var.get() == 1:
+            self.admin_checkbox.deselect()
+
+    def admin_check_event(self):
+        if self.admin_check_var.get() == 1:
+            self.cust_checkbox.deselect()
 
 
 if __name__ == "__main__":
