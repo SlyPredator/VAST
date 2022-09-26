@@ -44,7 +44,7 @@ class App(customtkinter.CTk):
 
         self.frame_right = customtkinter.CTkFrame(master=self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
-        self.frame_right.configure(fg_color="#2A6E6A")
+        self.frame_right.configure(fg_color="#D2FBD0")
         self.cust_check_var = self.admin_check_var = tkinter.IntVar(
             master=self.frame_right
         )
@@ -79,17 +79,24 @@ class App(customtkinter.CTk):
         self.label_text_1 = customtkinter.CTkLabel(
             master=self.frame_right,
             text="Enter the details",
+            text_color="#1B4643",
             text_font=("Roboto Medium", -16),
         )
         self.label_text_1.grid(row=0, column=0, pady=20, padx=230, sticky="we")
         self.user_entry = customtkinter.CTkEntry(
-            master=self.frame_right, width=120, placeholder_text="Username"
+            master=self.frame_right,
+            width=120,
+            placeholder_text="Username",
+            text_font=("Roboto Medium", -16),
         )
         self.user_entry.grid(
             row=1, column=0, columnspan=1, pady=0, padx=20, sticky="we"
         )
         self.pwd_entry = customtkinter.CTkEntry(
-            master=self.frame_right, width=120, placeholder_text="Password"
+            master=self.frame_right,
+            width=120,
+            placeholder_text="Password",
+            text_font=("Roboto Medium", -16),
         )
         self.pwd_entry.grid(
             row=2, column=0, columnspan=1, pady=20, padx=20, sticky="we"
@@ -101,6 +108,8 @@ class App(customtkinter.CTk):
             offvalue="0",
             command=self.cust_check_event,
             variable=self.cust_check_var,
+            text_color="#0D5F07",
+            text_font=("Roboto Medium", -16),
         )
         self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
 
@@ -111,6 +120,8 @@ class App(customtkinter.CTk):
             offvalue="0",
             command=self.admin_check_event,
             variable=self.admin_check_var,
+            text_color="#0D5F07",
+            text_font=("Roboto Medium", -16),
         )
         # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
         self.admin_checkbox.place(x=400, y=225)
@@ -118,13 +129,20 @@ class App(customtkinter.CTk):
             master=self.frame_right,
             text="Sign in",
             border_width=2,  # <- custom border_width
-            fg_color="blue",  # <- no fg_color
+            border_color="#1B4643",
+            fg_color="#1B4643",  # <- no fg_color
             command=self.button_event,
+            text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
         self.register_label = tkinter.Label(
             master=self.frame_right,
-            text="New here? Register by clicking here!", bg="#2A6E6A", fg="white"
+            text="New here? Register by clicking here!",
+            bg="#D2FBD0",  # 0D5F07
+            fg="#0D5F07",
+            font=("Roboto Medium", int(12), "underline"),
+            # text_font=("Roboto Medium", -16),
+            # text_color="#0D5F07",
         )
         self.register_label.grid(row=5, column=0, pady=20, padx=20, sticky="nsew")
         self.register_label.bind("<Button-1>", self.register)
