@@ -1,3 +1,4 @@
+import csv
 import tkinter
 import tkinter.messagebox
 from pathlib import Path
@@ -6,7 +7,6 @@ import customtkinter
 from PIL import Image
 from PIL import ImageTk as itk
 from tkintermapview import TkinterMapView
-
 
 ASSETS_PATH = Path(__file__).resolve().parent / "assets"
 
@@ -143,7 +143,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.button_event,
+            command=self.csv_check,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -180,6 +180,13 @@ class Login_App(customtkinter.CTk):
     def register(self, event=0):
         app2 = Register_App()
         app2.mainloop()
+
+    def csv_check(self):
+        with open("test.csv") as f:
+            data = csv.reader(f)
+            for x in data:
+                if [self.user_entry.get().strip(), self.pwd_entry.get().strip()] == x:
+                    print("yes")
 
 
 class Register_App(customtkinter.CTk):
@@ -286,7 +293,7 @@ class Register_App(customtkinter.CTk):
             text="Sign in",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
-            command=self.button_event,
+            command=self.csv_write,
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
 
@@ -306,6 +313,17 @@ class Register_App(customtkinter.CTk):
     def admin_check_event(self):
         if self.admin_check_var.get() == 1:
             self.cust_checkbox.deselect()
+
+    def csv_write(self):
+        with open("test.csv", "a", newline="") as f:
+            writer = csv.writer(f, lineterminator="\n")
+            writer.writerow(
+                [self.user_entry.get().strip(), self.pwd_entry.get().strip()]
+            )
+        self.toast()
+
+    def toast(self):
+        tkinter.messagebox.showinfo(message="Successfully registered!")
 
 
 class Map_App(customtkinter.CTk):
@@ -455,3 +473,19 @@ class Map_App(customtkinter.CTk):
 
     def start(self):
         self.mainloop()
+
+
+class Car_Selector(customtkinter.CTk):
+    WIDTH = 1016
+    HEIGHT = 735
+
+    def __init__(self):
+        super().__init__()
+
+        self.title("VAST - Car Selector")
+        self.geometry(f"{Car_Selector.WIDTH}x{Car_Selector.HEIGHT}+250+30")
+        # self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.grid_columnconfigure(0, weight=3)
+        self.grid_rowconfigure(0, weight=3)
+        self.frame = customtkinter.CTkFrame(master=self, width=700, corner_radius=10)
+        self.frame.grid(row=0, column=0, sticky="nwse", pady=30, padx=30)
