@@ -281,42 +281,48 @@ class Register_App(customtkinter.CTk):
             master=self.frame_right, width=120, placeholder_text="Username"
         )
         self.user_entry.grid(
-            row=1, column=0, columnspan=1, pady=0, padx=20, sticky="we"
+            row=1, column=0, columnspan=1, pady=10, padx=20, sticky="we"
         )
         self.pwd_entry = customtkinter.CTkEntry(
             master=self.frame_right, width=120, placeholder_text="Password"
         )
         self.pwd_entry.grid(
-            row=2, column=0, columnspan=1, pady=20, padx=20, sticky="we"
+            row=2, column=0, columnspan=1, pady=10, padx=20, sticky="we"
         )
-        self.cust_checkbox = customtkinter.CTkCheckBox(
-            master=self.frame_right,
-            text="Customer",
-            onvalue="1",
-            offvalue="0",
-            command=self.cust_check_event,
-            variable=self.cust_check_var,
+        self.pwd_entry_confirm = customtkinter.CTkEntry(
+            master=self.frame_right, width=120, placeholder_text="Re-enter password"
         )
-        self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
+        self.pwd_entry_confirm.grid(
+            row=3, column=0, columnspan=1, pady=10, padx=20, sticky="nwse"
+        )
+        # self.cust_checkbox = customtkinter.CTkCheckBox(
+        #     master=self.frame_right,
+        #     text="Customer",
+        #     onvalue="1",
+        #     offvalue="0",
+        #     command=self.cust_check_event,
+        #     variable=self.cust_check_var,
+        # )
+        # self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
 
-        self.admin_checkbox = customtkinter.CTkCheckBox(
-            master=self.frame_right,
-            text="Admin",
-            onvalue="1",
-            offvalue="0",
-            command=self.admin_check_event,
-            variable=self.admin_check_var,
-        )
-        # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
-        self.admin_checkbox.place(x=400, y=225)
+        # self.admin_checkbox = customtkinter.CTkCheckBox(
+        #     master=self.frame_right,
+        #     text="Admin",
+        #     onvalue="1",
+        #     offvalue="0",
+        #     command=self.admin_check_event,
+        #     variable=self.admin_check_var,
+        # )
+        # # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
+        # self.admin_checkbox.place(x=400, y=225)
         self.sign_in_btn = customtkinter.CTkButton(
             master=self.frame_right,
-            text="Sign in",
+            text="Sign Up",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
             command=self.db_write,
         )
-        self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
+        self.sign_in_btn.grid(row=4, column=0, pady=10, padx=20, sticky="we")
 
     def button_event(self):
         print("Button pressed")
