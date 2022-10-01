@@ -314,7 +314,7 @@ class Register_App(customtkinter.CTk):
             text="Sign in",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
-            command=self.csv_write,
+            command=self.db_write,
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=20, sticky="we")
 
@@ -335,15 +335,12 @@ class Register_App(customtkinter.CTk):
         if self.admin_check_var.get() == 1:
             self.cust_checkbox.deselect()
 
-    def csv_write(self):
-        with open("test.csv", "a", newline="") as f:
-            writer = csv.writer(f, lineterminator="\n")
-            writer.writerow(
-                [self.user_entry.get().strip(), self.pwd_entry.get().strip()]
-            )
-        self.toast()
-
-    def toast(self):
+    def db_write(self):
+        self.detail_tup = (self.user_entry.get().strip(), self.pwd_entry.get().strip())
+        mycursor.execute(
+            f"INSERT INTO customers (username, password) VALUES {self.detail_tup}"
+        )
+        mydb.commit()
         tkinter.messagebox.showinfo(message="Successfully registered!")
 
 
