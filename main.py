@@ -16,5 +16,5 @@ customtkinter.set_default_color_theme(
 )  # Themes: "blue" (standard), "green", "dark-blue"
 
 if __name__ == "__main__":
-    app = Register_App()
+    app = Login_App()
     app.mainloop()

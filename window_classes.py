@@ -8,6 +8,8 @@ from PIL import Image
 from PIL import ImageTk as itk
 from tkintermapview import TkinterMapView
 
+from dbfile import *
+
 ASSETS_PATH = Path(__file__).resolve().parent / "assets"
 
 
@@ -143,7 +145,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.csv_check,
+            command=self.db_check,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -181,12 +183,11 @@ class Login_App(customtkinter.CTk):
         app2 = Register_App()
         app2.mainloop()
 
-    def csv_check(self):
-        with open("test.csv") as f:
-            data = csv.reader(f)
-            for x in data:
-                if [self.user_entry.get().strip(), self.pwd_entry.get().strip()] == x:
-                    print("yes")
+    def db_check(self):
+        mycursor_fetch()
+        for record in mycursor:
+            if record == (self.user_entry.get().strip(), self.pwd_entry.get().strip()):
+                tkinter.messagebox.showinfo(message="Successfully logged in!")
 
 
 class Register_App(customtkinter.CTk):
