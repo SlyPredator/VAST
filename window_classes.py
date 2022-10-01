@@ -47,7 +47,7 @@ class Login_App(customtkinter.CTk):
         self.cust_check_var = self.admin_check_var = tkinter.IntVar(
             master=self.frame_right
         )
-
+        self.custnum = self.adminnum = 0
         self.frame_left.grid_rowconfigure(
             0, minsize=10
         )  # empty row with minsize as spacing
@@ -174,20 +174,40 @@ class Login_App(customtkinter.CTk):
     def cust_check_event(self):
         if self.cust_check_var.get() == 1:
             self.admin_checkbox.deselect()
+            self.custnum, self.adminnum = 1, 0
+        else:
+            self.custnum = 0
 
     def admin_check_event(self):
         if self.admin_check_var.get() == 1:
             self.cust_checkbox.deselect()
+            self.custnum, self.adminnum = 0, 1
+        else:
+            self.adminnum = 0
 
     def register(self, event=0):
         app2 = Register_App()
         app2.mainloop()
 
     def db_check(self):
-        mycursor_fetch()
-        for record in mycursor:
-            if record == (self.user_entry.get().strip(), self.pwd_entry.get().strip()):
-                tkinter.messagebox.showinfo(message="Successfully logged in!")
+        # print(self.custnum)
+        # print(self.adminnum)
+        if self.custnum == 1:
+            mycursor_fetch_cust()
+            for record in mycursor:
+                if record == (
+                    self.user_entry.get().strip(),
+                    self.pwd_entry.get().strip(),
+                ):
+                    tkinter.messagebox.showinfo(message="Successfully logged in!")
+        elif self.adminnum == 1:
+            mycursor_fetch_admin()
+            for record in mycursor:
+                if record == (
+                    self.user_entry.get().strip(),
+                    self.pwd_entry.get().strip(),
+                ):
+                    tkinter.messagebox.showinfo(message="Successfully logged in!")
 
 
 class Register_App(customtkinter.CTk):
