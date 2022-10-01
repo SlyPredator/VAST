@@ -129,7 +129,4 @@ dmypy.json
 .pyre/
 
 tempCodeRunnerFile.py
-vast_main.py
-admin.py
-mapview.py
-gitstats.sh
+main.py
