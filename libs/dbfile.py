@@ -1,7 +1,7 @@
 import mysql.connector
 
 mydb = mysql.connector.connect(
-    host="localhost", user="root", password="", database="mydatabase"
+    host="localhost", user="remote-user", password="remoteuser1", database="mydatabase"
 )
 
 mycursor = mydb.cursor()

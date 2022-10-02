@@ -6,7 +6,7 @@ import customtkinter
 from PIL import Image
 from PIL import ImageTk as itk
 
-from window_classes import *
+from libs.window_classes import *
 
 customtkinter.set_appearance_mode(
     "System"

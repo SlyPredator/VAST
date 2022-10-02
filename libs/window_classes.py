@@ -8,9 +8,9 @@ from PIL import Image
 from PIL import ImageTk as itk
 from tkintermapview import TkinterMapView
 
-from dbfile import *
+from libs.dbfile import *
 
-ASSETS_PATH = Path(__file__).resolve().parent / "assets"
+ASSETS_PATH = Path(__file__).resolve().parents[1] / "assets"
 
 
 class Login_App(customtkinter.CTk):
@@ -195,7 +195,7 @@ class Login_App(customtkinter.CTk):
         if self.custnum == 1:
             mycursor_fetch_cust()
             for record in mycursor:
-                if record == (
+                if record[1:] == (
                     self.user_entry.get().strip(),
                     self.pwd_entry.get().strip(),
                 ):
