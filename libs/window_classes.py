@@ -190,24 +190,31 @@ class Login_App(customtkinter.CTk):
         app2.mainloop()
 
     def db_check(self):
-        # print(self.custnum)
-        # print(self.adminnum)
-        if self.custnum == 1:
-            mycursor_fetch_cust()
-            for record in mycursor:
-                if record[1:] == (
-                    self.user_entry.get().strip(),
-                    self.pwd_entry.get().strip(),
-                ):
-                    tkinter.messagebox.showinfo(message="Successfully logged in!")
-        elif self.adminnum == 1:
-            mycursor_fetch_admin()
-            for record in mycursor:
-                if record == (
-                    self.user_entry.get().strip(),
-                    self.pwd_entry.get().strip(),
-                ):
-                    tkinter.messagebox.showinfo(message="Successfully logged in!")
+        if self.custnum == 0 or self.adminnum == 0:
+            if self.custnum == 1:
+                mycursor_fetch_cust()
+                for record in mycursor:
+                    if record[1:] == (
+                        self.user_entry.get().strip(),
+                        self.pwd_entry.get().strip(),
+                    ):
+                        tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        break
+                else:
+                    tkinter.messagebox.showerror(message="Wrong credentials, try again!")
+            elif self.adminnum == 1:
+                mycursor_fetch_admin()
+                for record in mycursor:
+                    if record == (
+                        self.user_entry.get().strip(),
+                        self.pwd_entry.get().strip(),
+                    ):
+                        tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        break
+                else:
+                    tkinter.messagebox.showerror(message="Wrong credentials, try again!")
+        if self.custnum == 0 and self.adminnum == 0:
+            tkinter.messagebox.showerror(message="Select whether you're a customer or administrator!")
 
 
 class Register_App(customtkinter.CTk):
