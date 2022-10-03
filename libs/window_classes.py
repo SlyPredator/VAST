@@ -8,7 +8,7 @@ from PIL import Image
 from PIL import ImageTk as itk
 from tkintermapview import TkinterMapView
 
-from libs.dbfile import *
+from libs.db_handler import *
 
 ASSETS_PATH = Path(__file__).resolve().parents[1] / "assets"
 
@@ -26,7 +26,7 @@ class Login_App(customtkinter.CTk):
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
-        logo = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
+        logo = itk.PhotoImage(load_img("logo"))
         self.call("wm", "iconphoto", self._w, logo)
         self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
         # ============ create two frames ============
@@ -48,6 +48,7 @@ class Login_App(customtkinter.CTk):
             master=self.frame_right
         )
         self.custnum = self.adminnum = 0
+        self.logged_in_cust = ""
         self.frame_left.grid_rowconfigure(
             0, minsize=10
         )  # empty row with minsize as spacing
@@ -236,7 +237,7 @@ class Register_App(customtkinter.CTk):
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
-        logo2 = itk.PhotoImage(Image.open(ASSETS_PATH / "bitmap.png"))
+        logo2 = itk.PhotoImage(Image.open(load_img("bitmap.png")))
         # self.call("wm", "iconphoto", self._w, logo2)
         self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
         # ============ create two frames ============
@@ -542,7 +543,7 @@ class Customer_Page(customtkinter.CTk):
             8, minsize=20
         )  # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure(11, minsize=10)
-        self.user_image = itk.PhotoImage(Image.open(ASSETS_PATH / "user_image.png"))
+        self.user_image = itk.PhotoImage(Image.open(load_img("user_umage")))
         self.button_5 = customtkinter.CTkButton(
             master=self.frame_left,
             image=self.user_image,
