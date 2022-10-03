@@ -201,7 +201,9 @@ class Login_App(customtkinter.CTk):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
                         break
                 else:
-                    tkinter.messagebox.showerror(message="Wrong credentials, try again!")
+                    tkinter.messagebox.showerror(
+                        message="Wrong credentials, try again!"
+                    )
             elif self.adminnum == 1:
                 mycursor_fetch_admin()
                 for record in mycursor:
@@ -212,9 +214,13 @@ class Login_App(customtkinter.CTk):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
                         break
                 else:
-                    tkinter.messagebox.showerror(message="Wrong credentials, try again!")
+                    tkinter.messagebox.showerror(
+                        message="Wrong credentials, try again!"
+                    )
         if self.custnum == 0 and self.adminnum == 0:
-            tkinter.messagebox.showerror(message="Select whether you're a customer or administrator!")
+            tkinter.messagebox.showerror(
+                message="Select whether you're a customer or administrator!"
+            )
 
 
 class Register_App(customtkinter.CTk):
@@ -506,7 +512,7 @@ class Map_App(customtkinter.CTk):
         self.mainloop()
 
 
-class Car_Selector(customtkinter.CTk):
+class Customer_Page(customtkinter.CTk):
     WIDTH = 1016
     HEIGHT = 735
 
@@ -514,9 +520,42 @@ class Car_Selector(customtkinter.CTk):
         super().__init__()
 
         self.title("VAST - Car Selector")
-        self.geometry(f"{Car_Selector.WIDTH}x{Car_Selector.HEIGHT}+250+30")
+        self.geometry(f"{Customer_Page.WIDTH}x{Customer_Page.HEIGHT}+250+30")
         # self.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self.grid_columnconfigure(0, weight=3)
-        self.grid_rowconfigure(0, weight=3)
-        self.frame = customtkinter.CTkFrame(master=self, width=700, corner_radius=10)
-        self.frame.grid(row=0, column=0, sticky="nwse", pady=30, padx=30)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        self.frame_left = customtkinter.CTkFrame(
+            master=self, width=500, corner_radius=0
+        )
+        self.frame_left.grid(row=0, column=0, sticky="nswe")
+
+        self.frame_right = customtkinter.CTkFrame(master=self)
+        self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
+        # self.frame_left.configure(fg_color="#B9D0E9")
+        self.frame_right.configure(fg_color="#B9D0E9")
+        self.frame_left.grid_rowconfigure(
+            0, minsize=10
+        )  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
+        self.frame_left.grid_rowconfigure(
+            8, minsize=20
+        )  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(11, minsize=10)
+        self.user_image = itk.PhotoImage(Image.open(ASSETS_PATH / "user_image.png"))
+        self.button_5 = customtkinter.CTkButton(
+            master=self.frame_left,
+            image=self.user_image,
+            text="ㅤ",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            hover_color=("gray84", "gray25"),
+        )
+        self.button_5.grid(row=0, column=0, padx=20, pady=3)
+        self.user_label = customtkinter.CTkLabel(
+            master=self.frame_left, text="User", text_font=("Roboto Medium", -13)
+        )
+        self.user_label.grid(row=1, column=0, padx=0, pady=0)
