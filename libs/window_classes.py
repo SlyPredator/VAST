@@ -187,27 +187,36 @@ class Login_App(customtkinter.CTk):
             self.adminnum = 0
 
     def register(self, event=0):
-        app2 = Register_App()
-        app2.mainloop()
+        app2 = Register_App(self)
+        app2.grab_set()
+
+    def customer_info(self, event=0):
+        app3 = Customer_Page(self)
+        app3.grab_set()
 
     def db_check(self):
         if self.custnum == 0 or self.adminnum == 0:
             if self.custnum == 1:
-                mycursor_fetch_cust()
-                for record in mycursor:
+                x = mycursor_fetch_any("customers")
+                for record in x:
                     if record[1:] == (
                         self.user_entry.get().strip(),
                         self.pwd_entry.get().strip(),
                     ):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        mycursor.execute(
+                            f"UPDATE logged SET name = '{self.user_entry.get()}'"
+                        )
+                        mydb.commit()
+                        self.customer_info()
                         break
                 else:
                     tkinter.messagebox.showerror(
                         message="Wrong credentials, try again!"
                     )
             elif self.adminnum == 1:
-                mycursor_fetch_admin()
-                for record in mycursor:
+                x = mycursor_fetch_any("admins")
+                for record in x:
                     if record == (
                         self.user_entry.get().strip(),
                         self.pwd_entry.get().strip(),
@@ -224,21 +233,21 @@ class Login_App(customtkinter.CTk):
             )
 
 
-class Register_App(customtkinter.CTk):
+class Register_App(customtkinter.CTkToplevel):
 
     WIDTH = 862
     HEIGHT = 519
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
 
         self.title("VAST - Login")
         self.geometry(f"{Register_App.WIDTH}x{Register_App.HEIGHT}+290+120")
         self.protocol(
             "WM_DELETE_WINDOW", self.on_closing
         )  # call .on_closing() when app gets closed
-        logo2 = itk.PhotoImage(Image.open(load_img("bitmap.png")))
-        # self.call("wm", "iconphoto", self._w, logo2)
+        logo = itk.PhotoImage(load_img("logo"))
+        self.iconphoto(False, logo)
         self.bind_all("<Button-1>", lambda event: event.widget.focus_set())
         # ============ create two frames ============
 
@@ -364,14 +373,14 @@ class Register_App(customtkinter.CTk):
         tkinter.messagebox.showinfo(message="Successfully registered!")
 
 
-class Map_App(customtkinter.CTk):
+class Map_App(customtkinter.CTkToplevel):
 
     MapApp_NAME = "TkinterMapView with CustomTkinter"
     WIDTH = 800
     HEIGHT = 500
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, parent):
+        super().__init__(parent)
 
         self.title(Map_App.MapApp_NAME)
         self.geometry(str(Map_App.WIDTH) + "x" + str(Map_App.HEIGHT))
@@ -513,16 +522,17 @@ class Map_App(customtkinter.CTk):
         self.mainloop()
 
 
-class Customer_Page(customtkinter.CTk):
+class Customer_Page(customtkinter.CTkToplevel):
     WIDTH = 1016
     HEIGHT = 735
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
 
         self.title("VAST - Car Selector")
         self.geometry(f"{Customer_Page.WIDTH}x{Customer_Page.HEIGHT}+250+30")
-        # self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        logo = itk.PhotoImage(load_img("logo"))
+        self.iconphoto(False, logo)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
@@ -543,7 +553,7 @@ class Customer_Page(customtkinter.CTk):
             8, minsize=20
         )  # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure(11, minsize=10)
-        self.user_image = itk.PhotoImage(Image.open(load_img("user_umage")))
+        self.user_image = itk.PhotoImage(load_img("user_image"))
         self.button_5 = customtkinter.CTkButton(
             master=self.frame_left,
             image=self.user_image,
@@ -556,7 +566,11 @@ class Customer_Page(customtkinter.CTk):
             hover_color=("gray84", "gray25"),
         )
         self.button_5.grid(row=0, column=0, padx=20, pady=3)
+        x = mycursor_fetch_any("logged")
+        self.logged_in_cust = [record for record in x]
         self.user_label = customtkinter.CTkLabel(
-            master=self.frame_left, text="User", text_font=("Roboto Medium", -13)
+            master=self.frame_left,
+            text=self.logged_in_cust[0][0],
+            text_font=("Roboto Medium", -13),
         )
         self.user_label.grid(row=1, column=0, padx=0, pady=0)

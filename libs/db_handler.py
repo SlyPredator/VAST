@@ -19,12 +19,9 @@ def mcs():
         print(x)
 
 
-def mycursor_fetch_cust():
-    mycursor.execute("select * from customers")
-
-
-def mycursor_fetch_admin():
-    mycursor.execute("select * from admins")
+def mycursor_fetch_any(name):
+    mycursor.execute(f"select * from {name}")
+    return mycursor.fetchall()
 
 
 def dump_img(image_file, name):
