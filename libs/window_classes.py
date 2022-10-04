@@ -150,6 +150,7 @@ class Login_App(customtkinter.CTk):
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
+        self.bind("<Return>", lambda event: self.db_check())
         self.register_label = tkinter.Label(
             master=self.frame_right,
             text="New here? Register by clicking here!",
@@ -194,6 +195,10 @@ class Login_App(customtkinter.CTk):
         app3 = Customer_Page(self)
         app3.grab_set()
 
+    def admin_open_map(self, event=0):
+        app4 = Map_App(self)
+        app4.grab_set()
+
     def db_check(self):
         if self.custnum == 0 or self.adminnum == 0:
             if self.custnum == 1:
@@ -222,6 +227,7 @@ class Login_App(customtkinter.CTk):
                         self.pwd_entry.get().strip(),
                     ):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        self.admin_open_map()
                         break
                 else:
                     tkinter.messagebox.showerror(
@@ -338,14 +344,15 @@ class Register_App(customtkinter.CTkToplevel):
         # )
         # # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
         # self.admin_checkbox.place(x=400, y=225)
-        self.sign_in_btn = customtkinter.CTkButton(
+        self.sign_up_btn = customtkinter.CTkButton(
             master=self.frame_right,
             text="Sign Up",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
             command=self.db_write,
         )
-        self.sign_in_btn.grid(row=4, column=0, pady=10, padx=20, sticky="we")
+        self.sign_up_btn.grid(row=4, column=0, pady=10, padx=20, sticky="we")
+        self.bind("<Return>", lambda event: self.db_write())
 
     def button_event(self):
         print("Button pressed")
