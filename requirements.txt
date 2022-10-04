@@ -1,5 +1,5 @@
 mysql-connector-python==8.0.30
-  protobuf==3.20.1
+  protobuf==3.20.2
 tkintermapview==1.14
   customtkinter==4.6.3
     darkdetect==0.7.1
