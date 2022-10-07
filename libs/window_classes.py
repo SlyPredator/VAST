@@ -146,7 +146,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.admin_open_map,
+            command=self.db_check,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -492,8 +492,15 @@ class Map_App(customtkinter.CTkToplevel):
     def set_marker_event(self):
         current_position = self.map_widget.get_position()
         self.marker_list.append(
-            self.map_widget.set_marker(current_position[0], current_position[1],text="Tower", text_color="green",
-                                 marker_color_circle="black", marker_color_outside="gray40", font=("Helvetica Bold", 24))
+            self.map_widget.set_marker(
+                current_position[0],
+                current_position[1],
+                text="Tower",
+                text_color="green",
+                marker_color_circle="black",
+                marker_color_outside="gray40",
+                font=("Helvetica Bold", 24),
+            )
         )
 
     def clear_marker_event(self):
@@ -680,9 +687,9 @@ class Car_Selector(customtkinter.CTkToplevel):
             text_font=("Roboto Medium", -14.5),
             bg_color="#B9D0E9",
         ).place(rely=0.5, relx=0.4)
-        self.car1 = itk.PhotoImage(Image.open(ASSETS_PATH / "tata_nexon.png"))
-        self.car2 = itk.PhotoImage(Image.open(ASSETS_PATH / "nio_es8.png"))
-        self.car3 = itk.PhotoImage(Image.open(ASSETS_PATH / "tesla_model_3.png"))
+        self.car1 = itk.PhotoImage(load_img("tata_nexon"))
+        self.car2 = itk.PhotoImage(load_img("nio_es8"))
+        self.car3 = itk.PhotoImage(load_img("tesla_model_3"))
         customtkinter.CTkButton(
             master=self.frame,
             image=self.car1,
