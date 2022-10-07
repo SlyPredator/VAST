@@ -674,6 +674,7 @@ class Car_Selector(customtkinter.CTkToplevel):
 
     def data(self):
         customtkinter.CTkLabel(
+            master=self.frame_right,
             text="SELECT YOUR CAR",
             height=50,
             corner_radius=10,  # <- custom corner radius
@@ -681,7 +682,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             justify=tkinter.CENTER,
             text_font=("Roboto Medium", -14.5),
             bg_color="#B9D0E9"
-        ).grid(row=0, column=1)
+        ).place(rely=0.5, relx=0.4)
         self.car1 = itk.PhotoImage(Image.open(ASSETS_PATH / "tata_nexon.png"))
         self.car2 = itk.PhotoImage(Image.open(ASSETS_PATH / "nio_es8.png"))
         self.car3 = itk.PhotoImage(Image.open(ASSETS_PATH / "tesla_model_3.png"))
