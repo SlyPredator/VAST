@@ -192,7 +192,7 @@ class Login_App(customtkinter.CTk):
         app2.grab_set()
 
     def customer_info(self, event=0):
-        app3 = Customer_Page(self)
+        app3 = Car_Selector(self)
         app3.grab_set()
 
     def admin_open_map(self, event=0):
@@ -536,6 +536,60 @@ class Customer_Page(customtkinter.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
 
+        self.title("VAST - Customer Info")
+        self.geometry(f"{Customer_Page.WIDTH}x{Customer_Page.HEIGHT}+250+30")
+        logo = itk.PhotoImage(load_img("logo"))
+        self.iconphoto(False, logo)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        self.frame_left = customtkinter.CTkFrame(
+            master=self, width=500, corner_radius=0
+        )
+        self.frame_left.grid(row=0, column=0, sticky="nswe")
+
+        self.frame_right = customtkinter.CTkFrame(master=self)
+        self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
+        # self.frame_left.configure(fg_color="#B9D0E9")
+        self.frame_right.configure(fg_color="#B9D0E9")
+        self.frame_left.grid_rowconfigure(
+            0, minsize=10
+        )  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
+        self.frame_left.grid_rowconfigure(
+            8, minsize=20
+        )  # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(11, minsize=10)
+        self.user_image = itk.PhotoImage(load_img("user_image"))
+        self.dummy_user_btn = customtkinter.CTkButton(
+            master=self.frame_left,
+            image=self.user_image,
+            text="ㅤ",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            hover_color=("gray84", "gray25"),
+        )
+        self.dummy_user_btn.grid(row=0, column=0, padx=20, pady=3)
+        x = mycursor_fetch_any("logged")
+        self.logged_in_cust = [record for record in x]
+        self.user_label = customtkinter.CTkLabel(
+            master=self.frame_left,
+            text=self.logged_in_cust[0][0],
+            text_font=("Roboto Medium", -13),
+        )
+        self.user_label.grid(row=1, column=0, padx=0, pady=0)
+
+
+class Car_Selector(customtkinter.CTkToplevel):
+    WIDTH = 1016
+    HEIGHT = 735
+
+    def __init__(self, parent):
+        super().__init__(parent)
+
         self.title("VAST - Car Selector")
         self.geometry(f"{Customer_Page.WIDTH}x{Customer_Page.HEIGHT}+250+30")
         logo = itk.PhotoImage(load_img("logo"))
@@ -561,7 +615,7 @@ class Customer_Page(customtkinter.CTkToplevel):
         )  # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure(11, minsize=10)
         self.user_image = itk.PhotoImage(load_img("user_image"))
-        self.button_5 = customtkinter.CTkButton(
+        self.dummy_user_btn = customtkinter.CTkButton(
             master=self.frame_left,
             image=self.user_image,
             text="ㅤ",
@@ -572,7 +626,7 @@ class Customer_Page(customtkinter.CTkToplevel):
             fg_color=("gray84", "gray25"),
             hover_color=("gray84", "gray25"),
         )
-        self.button_5.grid(row=0, column=0, padx=20, pady=3)
+        self.dummy_user_btn.grid(row=0, column=0, padx=20, pady=3)
         x = mycursor_fetch_any("logged")
         self.logged_in_cust = [record for record in x]
         self.user_label = customtkinter.CTkLabel(
@@ -581,3 +635,93 @@ class Customer_Page(customtkinter.CTkToplevel):
             text_font=("Roboto Medium", -13),
         )
         self.user_label.grid(row=1, column=0, padx=0, pady=0)
+        self.myframe = customtkinter.CTkFrame(
+            master=self.frame_right,
+            width=500,
+            height=100,
+            bg_color="#B9D0E9",
+            fg_color="#B9D0E9",
+        )
+        self.myframe.place(x=0, y=0)
+
+        self.canvas = tkinter.Canvas(self.myframe, bg="#B9D0E9")
+        self.frame = customtkinter.CTkFrame(
+            self.canvas, bg_color="#B9D0E9", border_color="#B9D0E9", fg_color="#B9D0E9"
+        )
+        self.myscrollbar = customtkinter.CTkScrollbar(
+            master=self.myframe,
+            orientation="horizontal",
+            command=self.canvas.xview,
+            fg_color="#B9D0E9",
+            height=50,
+        )
+        self.canvas.configure(xscrollcommand=self.myscrollbar.set)
+
+        self.myscrollbar.pack(side="bottom", fill="x")
+        self.canvas.pack(side="left")
+        self.canvas.create_window((50, 50), window=self.frame, anchor="w")
+        self.frame.bind("<Configure>", self.myfunction)
+        self.data()
+
+    def myfunction(self, event):
+        self.canvas.configure(
+            scrollregion=self.canvas.bbox("all"),
+            width=1000,
+            height=790,
+            bg="#B9D0E9",
+            borderwidth=0,
+        )
+
+    def data(self):
+        customtkinter.CTkLabel(
+            text="SELECT YOUR CAR",
+            height=50,
+            corner_radius=10,  # <- custom corner radius
+            fg_color=("white", "black"),  # <- custom tuple-color
+            justify=tkinter.CENTER,
+            text_font=("Roboto Medium", -14.5),
+            bg_color="#B9D0E9"
+        ).grid(row=0, column=1)
+        self.car1 = itk.PhotoImage(Image.open(ASSETS_PATH / "tata_nexon.png"))
+        self.car2 = itk.PhotoImage(Image.open(ASSETS_PATH / "nio_es8.png"))
+        self.car3 = itk.PhotoImage(Image.open(ASSETS_PATH / "tesla_model_3.png"))
+        customtkinter.CTkButton(
+            master=self.frame,
+            image=self.car1,
+            text="TATA NEXON",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            # hover_color=("gray84", "gray25"),
+            command=self.button_event,
+            # bg_color="#B9D0E9"
+        ).grid(row=1, column=0, padx=20, pady=20)
+        customtkinter.CTkButton(
+            master=self.frame,
+            image=self.car2,
+            text="NIO ES8",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            command=self.button_event,
+            # hover_color=("gray84", "gray25"),
+        ).grid(row=1, column=2, padx=20, pady=20)
+        customtkinter.CTkButton(
+            master=self.frame,
+            image=self.car3,
+            text="TESLA MODEL 3",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            command=self.button_event,
+            # hover_color=("gray84", "gray25"),
+        ).grid(row=1, column=3, padx=20, pady=20)
+
+    def button_event(self):
+        print("Button pressed")
