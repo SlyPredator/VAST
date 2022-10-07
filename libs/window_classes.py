@@ -146,7 +146,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.db_check,
+            command=self.admin_open_map,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -382,21 +382,18 @@ class Register_App(customtkinter.CTkToplevel):
 
 class Map_App(customtkinter.CTkToplevel):
 
-    MapApp_NAME = "TkinterMapView with CustomTkinter"
+    APP_NAME = "MapView"
     WIDTH = 800
     HEIGHT = 500
 
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.title(Map_App.MapApp_NAME)
+        self.title(Map_App.APP_NAME)
         self.geometry(str(Map_App.WIDTH) + "x" + str(Map_App.HEIGHT))
         self.minsize(Map_App.WIDTH, Map_App.HEIGHT)
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self.bind("<Command-q>", self.on_closing)
-        self.bind("<Command-w>", self.on_closing)
-        self.createcommand("tk::mac::Quit", self.on_closing)
 
         self.marker_list = []
 
@@ -436,21 +433,21 @@ class Map_App(customtkinter.CTkToplevel):
         self.map_label.grid(row=3, column=0, padx=(20, 20), pady=(20, 0))
         self.map_option_menu = customtkinter.CTkOptionMenu(
             self.frame_left,
-            values=["OpenStreetMap", "Google Normal", "Google Satellite"],
+            values=["OpenStreetMap", "Google normal", "Google satellite"],
             command=self.change_map,
         )
         self.map_option_menu.grid(row=4, column=0, padx=(20, 20), pady=(10, 0))
 
-        self.MapAppearance_mode_label = customtkinter.CTkLabel(
-            self.frame_left, text="MapAppearance Mode:", anchor="w"
+        self.appearance_mode_label = customtkinter.CTkLabel(
+            self.frame_left, text="Appearance Mode:", anchor="w"
         )
-        self.MapAppearance_mode_label.grid(row=5, column=0, padx=(20, 20), pady=(20, 0))
-        self.MapAppearance_mode_optionemenu = customtkinter.CTkOptionMenu(
+        self.appearance_mode_label.grid(row=5, column=0, padx=(20, 20), pady=(20, 0))
+        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(
             self.frame_left,
             values=["Light", "Dark", "System"],
-            command=self.change_MapAppearance_mode,
+            command=self.change_appearance_mode,
         )
-        self.MapAppearance_mode_optionemenu.grid(
+        self.appearance_mode_optionemenu.grid(
             row=6, column=0, padx=(20, 20), pady=(10, 20)
         )
 
@@ -487,24 +484,24 @@ class Map_App(customtkinter.CTkToplevel):
         # Set default values
         self.map_widget.set_address("Bangalore")
         self.map_option_menu.set("Google Normal")
-        self.MapAppearance_mode_optionemenu.set("Dark")
+        self.appearance_mode_optionemenu.set("Dark")
 
     def search_event(self, event=None):
         self.map_widget.set_address(self.entry.get())
-        self.slider_1.set(self.map_widget.zoom)
 
     def set_marker_event(self):
         current_position = self.map_widget.get_position()
-        self.marker_list.MapAppend(
-            self.map_widget.set_marker(current_position[0], current_position[1])
+        self.marker_list.append(
+            self.map_widget.set_marker(current_position[0], current_position[1],text="Tower", text_color="green",
+                                 marker_color_circle="black", marker_color_outside="gray40", font=("Helvetica Bold", 24))
         )
 
     def clear_marker_event(self):
         for marker in self.marker_list:
             marker.delete()
 
-    def change_MapAppearance_mode(self, new_MapAppearance_mode: str):
-        customtkinter.set_MapAppearance_mode(new_MapAppearance_mode)
+    def change_appearance_mode(self, new_appearance_mode: str):
+        customtkinter.set_appearance_mode(new_appearance_mode)
 
     def change_map(self, new_map: str):
         if new_map == "OpenStreetMap":
@@ -681,7 +678,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             fg_color=("white", "black"),  # <- custom tuple-color
             justify=tkinter.CENTER,
             text_font=("Roboto Medium", -14.5),
-            bg_color="#B9D0E9"
+            bg_color="#B9D0E9",
         ).place(rely=0.5, relx=0.4)
         self.car1 = itk.PhotoImage(Image.open(ASSETS_PATH / "tata_nexon.png"))
         self.car2 = itk.PhotoImage(Image.open(ASSETS_PATH / "nio_es8.png"))
