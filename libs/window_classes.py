@@ -146,7 +146,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.customer_info,
+            command=self.db_check,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -192,7 +192,7 @@ class Login_App(customtkinter.CTk):
         app2.grab_set()
 
     def customer_info(self, event=0):
-        app3 = Car_Selector(self)
+        app3 = Customer_Page(self)
         app3.grab_set()
 
     def admin_open_map(self, event=0):
@@ -587,7 +587,15 @@ class Customer_Page(customtkinter.CTkToplevel):
         self.user_label.grid(row=1, column=0, padx=0, pady=0)
         self.chosen_car_btn = customtkinter.CTkButton(
             master=self.frame_right,
-        )
+            image=itk.PhotoImage(chosen_car_img(f"{self.logged_in_cust[0][0]}")),
+            text="ㅤ",
+            border_width=2,
+            corner_radius=10,
+            compound="top",
+            border_color="#D35B58",
+            fg_color=("gray84", "gray25"),
+            hover_color=("gray84", "gray25"),
+        ).place(rely=0.3, relx=0.23)
 
 
 class Car_Selector(customtkinter.CTkToplevel):
