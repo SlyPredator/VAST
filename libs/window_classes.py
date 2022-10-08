@@ -146,7 +146,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.db_check,
+            command=self.customer_info,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -585,6 +585,9 @@ class Customer_Page(customtkinter.CTkToplevel):
             text_font=("Roboto Medium", -13),
         )
         self.user_label.grid(row=1, column=0, padx=0, pady=0)
+        self.chosen_car_btn = customtkinter.CTkButton(
+            master=self.frame_right,
+        )
 
 
 class Car_Selector(customtkinter.CTkToplevel):
@@ -700,7 +703,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
             # hover_color=("gray84", "gray25"),
-            command=self.button_event,
+            command=lambda: self.choose_car("tata_nexon"),
             # bg_color="#B9D0E9"
         ).grid(row=1, column=0, padx=20, pady=20)
         customtkinter.CTkButton(
@@ -712,7 +715,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             compound="top",
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
-            command=self.button_event,
+            command=lambda: self.choose_car("nio_es8"),
             # hover_color=("gray84", "gray25"),
         ).grid(row=1, column=2, padx=20, pady=20)
         customtkinter.CTkButton(
@@ -724,9 +727,18 @@ class Car_Selector(customtkinter.CTkToplevel):
             compound="top",
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
-            command=self.button_event,
+            command=lambda: self.choose_car("tesla_model_3"),
             # hover_color=("gray84", "gray25"),
         ).grid(row=1, column=3, padx=20, pady=20)
 
     def button_event(self):
         print("Button pressed")
+
+    def choose_car(self, car_name: str):
+        x = mycursor_fetch_any("logged")
+        logged = [record for record in x]
+        logged_in_cust = logged[0][0]
+        query = f"UPDATE customers SET car = '{car_name}' WHERE username = '{logged_in_cust}';"
+        mycursor.execute(query)
+        mydb.commit()
+        print("success")
