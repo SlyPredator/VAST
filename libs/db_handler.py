@@ -44,14 +44,5 @@ def load_img(name: str):
     return image
 
 
-def chosen_car_img(username: str):
-    query = f"SELECT car FROM customers WHERE username = '{username}'"
-    mycursor.execute(query)
-    data = mycursor.fetchall()
-    car = data[0][0]
-    return load_img(f"{car}")
-
-
 # dump_img(ASSETS_PATH / "user_image.png", "user_image")
 # load_img("user_image")
-chosen_car_img("Tejas")
