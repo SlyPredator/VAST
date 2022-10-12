@@ -192,7 +192,7 @@ class Login_App(customtkinter.CTk):
         app2.grab_set()
 
     def customer_info(self, event=0):
-        app3 = Customer_Page(self)
+        app3 = Car_Selector(self)
         app3.grab_set()
 
     def admin_open_map(self, event=0):
@@ -204,7 +204,7 @@ class Login_App(customtkinter.CTk):
             if self.custnum == 1:
                 x = mycursor_fetch_any("customers")
                 for record in x:
-                    if record[1:] == (
+                    if record[1:3] == (
                         self.user_entry.get().strip(),
                         self.pwd_entry.get().strip(),
                     ):
@@ -213,6 +213,8 @@ class Login_App(customtkinter.CTk):
                             f"UPDATE logged SET name = '{self.user_entry.get()}'"
                         )
                         mydb.commit()
+                        self.user_entry.delete("0", "end")
+                        self.pwd_entry.delete("0", "end")
                         self.customer_info()
                         break
                 else:
@@ -227,6 +229,8 @@ class Login_App(customtkinter.CTk):
                         self.pwd_entry.get().strip(),
                     ):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        self.user_entry.delete("0", "end")
+                        self.pwd_entry.delete("0", "end")
                         self.admin_open_map()
                         break
                 else:
@@ -324,35 +328,15 @@ class Register_App(customtkinter.CTkToplevel):
         self.pwd_entry_confirm.grid(
             row=3, column=0, columnspan=1, pady=10, padx=20, sticky="nwse"
         )
-        # self.cust_checkbox = customtkinter.CTkCheckBox(
-        #     master=self.frame_right,
-        #     text="Customer",
-        #     onvalue="1",
-        #     offvalue="0",
-        #     command=self.cust_check_event,
-        #     variable=self.cust_check_var,
-        # )
-        # self.cust_checkbox.grid(row=4, column=0, pady=10, padx=100, sticky="we")
-
-        # self.admin_checkbox = customtkinter.CTkCheckBox(
-        #     master=self.frame_right,
-        #     text="Admin",
-        #     onvalue="1",
-        #     offvalue="0",
-        #     command=self.admin_check_event,
-        #     variable=self.admin_check_var,
-        # )
-        # # self.admin_checkbox.grid(row=4, column=1, pady=10, padx=20, sticky="s")
-        # self.admin_checkbox.place(x=400, y=225)
         self.sign_up_btn = customtkinter.CTkButton(
             master=self.frame_right,
             text="Sign Up",
             border_width=2,  # <- custom border_width
             fg_color="blue",  # <- no fg_color
-            command=self.db_write,
+            command=self.dbwriter,
         )
         self.sign_up_btn.grid(row=4, column=0, pady=10, padx=20, sticky="we")
-        self.bind("<Return>", lambda event: self.db_write())
+        self.bind("<Return>", lambda event: self.dbwriter())
 
     def button_event(self):
         print("Button pressed")
@@ -371,13 +355,17 @@ class Register_App(customtkinter.CTkToplevel):
         if self.admin_check_var.get() == 1:
             self.cust_checkbox.deselect()
 
-    def db_write(self):
-        self.detail_tup = (self.user_entry.get().strip(), self.pwd_entry.get().strip())
-        mycursor.execute(
-            f"INSERT INTO customers (username, password) VALUES {self.detail_tup}"
-        )
-        mydb.commit()
-        tkinter.messagebox.showinfo(message="Successfully registered!")
+    def dbwriter(self):
+        if self.pwd_entry.get().strip() == self.pwd_entry_confirm.get().strip():
+            detail_tup = (self.user_entry.get().strip(), self.pwd_entry.get().strip())
+            db_write(detail_tup)
+            self.user_entry.delete("0", "end")
+            self.pwd_entry.delete("0", "end")
+            self.pwd_entry_confirm.delete("0", "end")
+        else:
+            tkinter.messagebox.showerror(
+                message="Passwords entered do not match! Try again!"
+            )
 
 
 class Map_App(customtkinter.CTkToplevel):
@@ -711,7 +699,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
             # hover_color=("gray84", "gray25"),
-            command=lambda: self.choose_car("tata_nexon"),
+            command=lambda: choose_car("tata_nexon"),
             # bg_color="#B9D0E9"
         ).grid(row=1, column=0, padx=20, pady=20)
         customtkinter.CTkButton(
@@ -723,7 +711,7 @@ class Car_Selector(customtkinter.CTkToplevel):
             compound="top",
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
-            command=lambda: self.choose_car("nio_es8"),
+            command=lambda: choose_car("nio_es8"),
             # hover_color=("gray84", "gray25"),
         ).grid(row=1, column=2, padx=20, pady=20)
         customtkinter.CTkButton(
@@ -735,18 +723,9 @@ class Car_Selector(customtkinter.CTkToplevel):
             compound="top",
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
-            command=lambda: self.choose_car("tesla_model_3"),
+            command=lambda: choose_car("tesla_model_3"),
             # hover_color=("gray84", "gray25"),
         ).grid(row=1, column=3, padx=20, pady=20)
 
     def button_event(self):
         print("Button pressed")
-
-    def choose_car(self, car_name: str):
-        x = mycursor_fetch_any("logged")
-        logged = [record for record in x]
-        logged_in_cust = logged[0][0]
-        query = f"UPDATE customers SET car = '{car_name}' WHERE username = '{logged_in_cust}';"
-        mycursor.execute(query)
-        mydb.commit()
-        print("success")
