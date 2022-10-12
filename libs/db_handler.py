@@ -6,6 +6,8 @@ import mysql.connector
 from PIL import Image
 from PIL import ImageTk as itk
 
+from libs.window_classes import *
+
 password = open("password.txt").readline()
 mydb = mysql.connector.connect(
     host="localhost", user="root", password=password, database="mydatabase"
@@ -51,6 +53,21 @@ def chosen_car_img(username: str):
     car = data[0][0]
     return load_img(f"{car}")
 
+def choose_car(car_name: str):
+    x = mycursor_fetch_any("logged")
+    logged = [record for record in x]
+    logged_in_cust = logged[0][0]
+    query = f"UPDATE customers SET car = '{car_name}' WHERE username = '{logged_in_cust}';"
+    mycursor.execute(query)
+    mydb.commit()
+    print("success")
+
+def db_write(tup: tuple):
+    mycursor.execute(
+        f"INSERT INTO customers (username, password) VALUES {tup}"
+    )
+    mydb.commit()
+    tkinter.messagebox.showinfo(message="Successfully registered!")
 
 # dump_img(ASSETS_PATH / "user_image.png", "user_image")
 # load_img("user_image")
