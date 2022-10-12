@@ -146,7 +146,7 @@ class Login_App(customtkinter.CTk):
             border_width=2,  # <- custom border_width
             border_color="#0E2239",
             fg_color="#0E2239",  # <- no fg_color
-            command=self.customer_info,
+            command=self.db_check,
             text_font=("Roboto Medium", -16),
         )
         self.sign_in_btn.grid(row=3, column=0, pady=10, padx=40, sticky="we")
@@ -352,8 +352,16 @@ class Register_App(customtkinter.CTkToplevel):
             self.cust_checkbox.deselect()
 
     def dbwriter(self):
-        detail_tup = (self.user_entry.get().strip(), self.pwd_entry.get().strip())
-        db_write(detail_tup)
+        if self.pwd_entry.get().strip() == self.pwd_entry_confirm.get().strip():
+            detail_tup = (self.user_entry.get().strip(), self.pwd_entry.get().strip())
+            db_write(detail_tup)
+            self.user_entry.delete("0", "end")
+            self.pwd_entry.delete("0", "end")
+            self.pwd_entry_confirm.delete("0", "end")
+        else:
+            tkinter.messagebox.showerror(
+                message="Passwords entered do not match! Try again!"
+            )
 
 
 class Map_App(customtkinter.CTkToplevel):
