@@ -204,7 +204,7 @@ class Login_App(customtkinter.CTk):
             if self.custnum == 1:
                 x = mycursor_fetch_any("customers")
                 for record in x:
-                    if record[1:] == (
+                    if record[1:3] == (
                         self.user_entry.get().strip(),
                         self.pwd_entry.get().strip(),
                     ):
@@ -213,6 +213,8 @@ class Login_App(customtkinter.CTk):
                             f"UPDATE logged SET name = '{self.user_entry.get()}'"
                         )
                         mydb.commit()
+                        self.user_entry.delete("0", "end")
+                        self.pwd_entry.delete("0", "end")
                         self.customer_info()
                         break
                 else:
@@ -227,6 +229,8 @@ class Login_App(customtkinter.CTk):
                         self.pwd_entry.get().strip(),
                     ):
                         tkinter.messagebox.showinfo(message="Successfully logged in!")
+                        self.user_entry.delete("0", "end")
+                        self.pwd_entry.delete("0", "end")
                         self.admin_open_map()
                         break
                 else:
