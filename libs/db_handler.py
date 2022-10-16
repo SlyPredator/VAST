@@ -10,7 +10,7 @@ from PIL import ImageTk as itk
 
 password = open("password.txt").readline()
 mydb = mysql.connector.connect(
-    host="localhost", user="root", password=password, database="mydatabase"
+    host="localhost", user="root", password=password, database="vast_db"
 )
 ASSETS_PATH = Path(__file__).resolve().parents[1] / "assets"
 mycursor = mydb.cursor()
