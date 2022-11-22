@@ -15,7 +15,7 @@ tkintermapview==1.14
       idna==2.10
       urllib3==1.26.12
     six==1.16.0
-  Pillow==9.0.1
+  Pillow==9.3.0
   pyperclip==1.8.2
   pywin32==304
   requests==2.25.1
