@@ -10,7 +10,7 @@ tkintermapview==1.14
     ratelim==0.1.6
       decorator==5.1.1
     requests==2.25.1
-      certifi==2022.9.14
+      certifi==2022.12.7
       chardet==4.0.0
       idna==2.10
       urllib3==1.26.12
@@ -19,7 +19,7 @@ tkintermapview==1.14
   pyperclip==1.8.2
   pywin32==304
   requests==2.25.1
-    certifi==2022.9.14
+    certifi==2022.12.7
     chardet==4.0.0
     idna==2.10
     urllib3==1.26.12
