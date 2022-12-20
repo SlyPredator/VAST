@@ -192,8 +192,12 @@ class Login_App(customtkinter.CTk):
         app2.grab_set()
 
     def customer_info(self, event=0):
-        app3 = Car_Selector(self)
+        app3 = Customer_Page(self)
         app3.grab_set()
+
+    def car_selector(self, event=0):
+        app4 = Car_Selector(self)
+        app4.grab_set()
 
     def admin_open_map(self, event=0):
         app4 = Map_App(self)
@@ -215,7 +219,15 @@ class Login_App(customtkinter.CTk):
                         mydb.commit()
                         self.user_entry.delete("0", "end")
                         self.pwd_entry.delete("0", "end")
-                        self.customer_info()
+                        x = mycursor_fetch_any("logged")
+                        self.logged_in_cust = [record for record in x]
+                        print(self.logged_in_cust)
+                        mycursor.execute(f"select car from customers where username= '{self.logged_in_cust[0][0]}'")
+                        res = mycursor.fetchall()
+                        if res[0][0] != None:
+                            self.customer_info()
+                        elif res[0][0] == None:
+                            self.car_selector()
                         break
                 else:
                     tkinter.messagebox.showerror(
@@ -583,7 +595,19 @@ class Customer_Page(customtkinter.CTkToplevel):
             border_color="#D35B58",
             fg_color=("gray84", "gray25"),
             hover_color=("gray84", "gray25"),
-        ).place(rely=0.3, relx=0.23)
+        ).place(rely=0.3, relx=0.19)
+        self.car_return_btn = customtkinter.CTkButton(
+            master=self.frame_right,
+            text="Return your car",
+            border_width=2,
+            corner_radius=10,
+            border_color="#D35B58",
+            fg_color="#F3D759",
+            text_color='#112A46',
+            text_font=("Roboto Medium", -16),
+            height=45,
+            width=160
+        ).place(rely=0.8, relx=0.4)
 
 
 class Car_Selector(customtkinter.CTkToplevel):
@@ -669,8 +693,8 @@ class Car_Selector(customtkinter.CTkToplevel):
     def myfunction(self, event):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
-            width=1000,
-            height=790,
+            width=793,
+            height=650,
             bg="#B9D0E9",
             borderwidth=0,
         )
