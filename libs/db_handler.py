@@ -7,7 +7,6 @@ import mysql.connector
 from PIL import Image
 from PIL import ImageTk as itk
 
-
 password = open("password.txt").readline()
 mydb = mysql.connector.connect(
     host="localhost", user="root", password=password, database="vast_db"
@@ -71,6 +70,18 @@ def db_write(tup: tuple):
     mydb.commit()
     tkinter.messagebox.showinfo(message="Successfully registered!")
 
+
+def return_car():
+    x = mycursor_fetch_any("logged")
+    logged = [record for record in x]
+    logged_in_cust = logged[0][0]
+    query = (
+        f"UPDATE customers SET car = NULL WHERE username = '{logged_in_cust}';"
+    )
+    mycursor.execute(query)
+    mydb.commit()
+    print("success")
+    tkinter.messagebox.showinfo(message="Successfully returned your car!")
 
 # dump_img(ASSETS_PATH / "user_image.png", "user_image")
 # load_img("user_image")

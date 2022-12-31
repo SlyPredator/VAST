@@ -607,14 +607,14 @@ class Customer_Page(customtkinter.CTkToplevel):
             text_font=("Roboto Medium", -16),
             height=45,
             width=160,
-            command=self.return_car
+            command=lambda:[return_car(), self.destroy()]
         ).place(rely=0.8, relx=0.4)
     
-    def return_car(self):
-        mycursor.execute(f"UPDATE customers SET car = NULL where username = '{self.logged_in_cust[0][0]}'")
-        mydb.commit()
-        tkinter.messagebox.showinfo(message="Successfully returned your car!")
-        self.destroy()
+    # def return_car(self):
+    #     mycursor.execute(f"UPDATE customers SET car = NULL where username = '{self.logged_in_cust[0][0]}'")
+    #     mydb.commit()
+    #     tkinter.messagebox.showinfo(message="Successfully returned your car!")
+    #     self.destroy()
 
 class Car_Selector(customtkinter.CTkToplevel):
     WIDTH = 1016
